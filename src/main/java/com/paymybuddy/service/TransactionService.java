@@ -1,5 +1,6 @@
 package com.paymybuddy.service;
 
+import com.paymybuddy.exception.InsufficientBalanceException;
 import com.paymybuddy.model.Transaction;
 import com.paymybuddy.model.User;
 import com.paymybuddy.repository.TransactionRepository;
@@ -25,7 +26,7 @@ public class TransactionService {
         User receiver = userRepository.findByEmail(receiverEmail);
 
         if (sender.getBalance().compareTo(amount) < 0) {
-            throw new RuntimeException("Solde insuffisant");
+            throw new InsufficientBalanceException("Solde insuffisant");
         }
 
         sender.setBalance(sender.getBalance().subtract(amount));
