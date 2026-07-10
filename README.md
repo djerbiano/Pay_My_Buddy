@@ -43,4 +43,4 @@ Clé primaire composite : `(user_id, connection_id)`
 
 > Note : le type `DECIMAL(10,2)` est utilisé à la place du `double` du diagramme UML
 > pour éviter les erreurs d'arrondi propres aux flottants binaires, ce qui est une
-> bonne pratique pour manipuler des montants monétaires.# Test connexion Linux Mint - ven. 10 juil. 2026 14:13:14 CEST
+> bonne pratique pour manipuler des montants monétaires.
