@@ -23,4 +23,9 @@ public class GlobalExceptionHandler {
         model.addAttribute("error", ex.getMessage());
         return "add-connection";
     }
+    @ExceptionHandler(EmailAlreadyExistsException.class)
+    public String handleEmailAlreadyExists(EmailAlreadyExistsException ex, Model model) {
+        model.addAttribute("error", ex.getMessage());
+        return "register";
+    }
 }

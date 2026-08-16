@@ -10,7 +10,8 @@
     <main>
       <section class="container">
         <h1>Pay My Buddy</h1>
-
+        <p th:if="${error}" th:text="${error}"
+           class="error" role="alert" aria-live="polite"></p>
         <form th:action="@{/register}" method="post">
           <label class="sr-only" for="username">Username</label>
           <input

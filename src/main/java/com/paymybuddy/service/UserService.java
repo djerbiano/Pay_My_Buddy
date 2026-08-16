@@ -1,6 +1,7 @@
 package com.paymybuddy.service;
 
 import com.paymybuddy.exception.ConnectionAlreadyExistsException;
+import com.paymybuddy.exception.EmailAlreadyExistsException;
 import com.paymybuddy.exception.UserNotFoundException;
 import com.paymybuddy.model.User;
 import com.paymybuddy.repository.UserRepository;
@@ -18,6 +19,9 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
     public User register(String username, String email, String password) {
+        if (userRepository.findByEmail(email) != null) {
+            throw new EmailAlreadyExistsException("Veuillez utiliser une autre adresse email");
+        }
         User user = new User();
         user.setUsername(username);
         user.setEmail(email);
