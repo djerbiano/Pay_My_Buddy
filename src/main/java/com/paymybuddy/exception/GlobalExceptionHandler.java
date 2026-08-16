@@ -18,4 +18,9 @@ public class GlobalExceptionHandler {
         return "add-connection";
     }
 
+    @ExceptionHandler(ConnectionAlreadyExistsException.class)
+    public String handleConnectionAlreadyExists(ConnectionAlreadyExistsException ex, Model model) {
+        model.addAttribute("error", ex.getMessage());
+        return "add-connection";
+    }
 }

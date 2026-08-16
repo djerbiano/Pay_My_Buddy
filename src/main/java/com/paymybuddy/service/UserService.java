@@ -1,5 +1,6 @@
 package com.paymybuddy.service;
 
+import com.paymybuddy.exception.ConnectionAlreadyExistsException;
 import com.paymybuddy.exception.UserNotFoundException;
 import com.paymybuddy.model.User;
 import com.paymybuddy.repository.UserRepository;
@@ -29,6 +30,12 @@ public class UserService {
         User connection = userRepository.findByEmail(connectionEmail);
         if (connection == null) {
             throw new UserNotFoundException("Aucun utilisateur trouvé avec l'email : " + connectionEmail);
+        }
+        if (userEmail.equals(connectionEmail)) {
+            throw new ConnectionAlreadyExistsException("Vous ne pouvez pas vous ajouter vous-même");
+        }
+        if (user.getConnections().contains(connection)) {
+            throw new ConnectionAlreadyExistsException("Cette relation existe déjà");
         }
         user.getConnections().add(connection);
         userRepository.save(user);
