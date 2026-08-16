@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -36,8 +37,14 @@ public class TransactionController {
     public String transfer(Authentication authentication,
                            @RequestParam String receiverEmail,
                            @RequestParam String description,
-                           @RequestParam BigDecimal amount) {
-        transactionService.transfert(authentication.getName(), receiverEmail, description, amount);
+                           @RequestParam BigDecimal amount,
+                           RedirectAttributes redirectAttributes) {
+        try {
+            transactionService.transfert(authentication.getName(), receiverEmail, description, amount);
+        }  catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
+
         return "redirect:/transfer";
     }
 }

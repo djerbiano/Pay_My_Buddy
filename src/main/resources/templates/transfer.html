@@ -79,7 +79,7 @@
               <tr th:each="transaction : ${transactions}">
                 <td th:text="${transaction.receiver.username}"></td>
                 <td th:text="${transaction.description}"></td>
-                <td th:text="${transaction.amount}"></td>
+                <td th:text="${transaction.amount} + '€'"></td>
               </tr>
             </tbody>
           </table>
