@@ -12,16 +12,27 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
+    /**
+     * Affiche la page de connexion
+     */
     @GetMapping("/login")
     public String login() {
         return "login";
     }
 
+    /**
+     * Affiche le formulaire d'inscription
+     */
     @GetMapping("/register")
     public String registerForm() {
         return "register";
     }
 
+    /**
+     * Traite le formulaire d'inscription.
+     * Délègue la logique métier à UserService.
+     * Redirige vers /login après inscription réussie.
+     */
     @PostMapping("/register")
     public String register(@RequestParam String username, @RequestParam String email, @RequestParam String password) {
         userService.register(username, email, password);

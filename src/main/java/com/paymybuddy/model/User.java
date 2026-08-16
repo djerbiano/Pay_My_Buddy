@@ -18,16 +18,29 @@ public class User {
 
     @Column(nullable = false, length = 50)
     private String username;
-
+    /**
+     * Email unique utilisé comme identifiant de connexion
+     */
     @Column(nullable = false, unique = true, length = 100)
     private String email;
 
     @Column(nullable = false, length = 255)
     private String password;
 
+    /**
+     * Solde du compte en DECIMAL(10,2) — choix délibéré vs double
+     * pour éviter les erreurs d'arrondi sur les montants monétaires.
+     * Initialisé à zéro à la création du compte.
+     */
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal balance = BigDecimal.ZERO;
 
+    /**
+     * Liste des relations de l'utilisateur — relation many-to-many réflexive.
+     * Unidirectionnelle : A ajoute B sans réciprocité automatique.
+     * Initialisée à ArrayList vide pour éviter les NullPointerException
+     * sur les nouveaux utilisateurs sans connexion.
+     */
     @ManyToMany
     @JoinTable(
             name = "connection",

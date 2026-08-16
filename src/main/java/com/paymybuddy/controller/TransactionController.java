@@ -24,6 +24,10 @@ public class TransactionController {
     @Autowired
     private UserService userService;
 
+    /**
+     * Affiche la page de transfert avec la liste des relations
+     * et l'historique des transactions de l'utilisateur connecté.
+     */
     @GetMapping("/transfer")
     public String transferForm(Authentication authentication, Model model) {
         User user = userService.findByEmail(authentication.getName());
@@ -33,6 +37,12 @@ public class TransactionController {
         return "transfer";
     }
 
+    /**
+     * Traite le formulaire de transfert.
+     * Valide la relation et le montant avant de déléguer au service.
+     * Utilise RedirectAttributes pour conserver le message d'erreur
+     * après le redirect vers GET /transfer.
+     */
     @PostMapping("/transfer")
     public String transfer(Authentication authentication,
                            @RequestParam String receiverEmail,
@@ -49,7 +59,7 @@ public class TransactionController {
                 return "redirect:/transfer";
             }
             transactionService.transfert(authentication.getName(), receiverEmail, description, amount);
-        }  catch (Exception e) {
+        } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
 

@@ -16,6 +16,12 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * Charge un utilisateur depuis la base de données par son email.
+     * Appelé automatiquement par Spring Security lors de la connexion.
+     * Retourne un UserDetails contenant email et mot de passe hashé
+     * pour que Spring Security puisse vérifier les credentials.
+     */
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email);

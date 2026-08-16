@@ -20,6 +20,12 @@ public class TransactionService {
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * Effectue un transfert d'argent entre deux utilisateurs.
+     * Vérifie que le solde de l'expéditeur est suffisant avant de débiter.
+     * L'opération est atomique grâce à @Transactional :
+     * si une erreur survient, tout est annulé (rollback automatique).
+     */
     @Transactional
     public void transfert(String senderEmail, String receiverEmail, String description, BigDecimal amount) {
         User sender = userRepository.findByEmail(senderEmail);
@@ -43,6 +49,9 @@ public class TransactionService {
         transactionRepository.save(transaction);
     }
 
+    /**
+     * Récupère toutes les transactions effectuées par un utilisateur.
+     */
     public List<Transaction> getTransactionsBySender(Integer senderId) {
         return transactionRepository.findBySenderId(senderId);
     }

@@ -19,6 +19,10 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    /**
+     * Inscrit un nouvel utilisateur après vérification que l'email n'est pas déjà utilisé.
+     * Le mot de passe est hashé avec BCrypt avant la sauvegarde.
+     */
     @Transactional
     public User register(String username, String email, String password) {
         if (userRepository.findByEmail(email) != null) {
@@ -31,6 +35,11 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    /**
+     * Ajoute une relation entre deux utilisateurs.
+     * Vérifie que la relation n'existe pas déjà et que l'utilisateur
+     * ne tente pas de s'ajouter lui-même.
+     */
     @Transactional
     public void addConnection(String userEmail, String connectionEmail) {
         User user = userRepository.findByEmail(userEmail);
@@ -48,6 +57,9 @@ public class UserService {
         userRepository.save(user);
     }
 
+    /**
+     * Recherche un utilisateur par son email.
+     */
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
