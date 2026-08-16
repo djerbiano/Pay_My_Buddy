@@ -8,6 +8,7 @@ import com.paymybuddy.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserService {
@@ -18,6 +19,7 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Transactional
     public User register(String username, String email, String password) {
         if (userRepository.findByEmail(email) != null) {
             throw new EmailAlreadyExistsException("Veuillez utiliser une autre adresse email");
@@ -29,6 +31,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    @Transactional
     public void addConnection(String userEmail, String connectionEmail) {
         User user = userRepository.findByEmail(userEmail);
         User connection = userRepository.findByEmail(connectionEmail);
