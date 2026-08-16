@@ -37,9 +37,17 @@ public class TransactionController {
     public String transfer(Authentication authentication,
                            @RequestParam String receiverEmail,
                            @RequestParam String description,
-                           @RequestParam BigDecimal amount,
+                           @RequestParam(required = false) BigDecimal amount,
                            RedirectAttributes redirectAttributes) {
         try {
+            if (receiverEmail == null || receiverEmail.isEmpty()) {
+                redirectAttributes.addFlashAttribute("error", "Veuillez sélectionner une relation");
+                return "redirect:/transfer";
+            }
+            if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
+                redirectAttributes.addFlashAttribute("error", "Veuillez saisir un montant valide");
+                return "redirect:/transfer";
+            }
             transactionService.transfert(authentication.getName(), receiverEmail, description, amount);
         }  catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
