@@ -41,7 +41,7 @@ public class SecurityConfig {
 
     /**
      * Configure les règles de sécurité HTTP :
-     * - Pages publiques : /login, /register, /css/**
+     * - Pages publiques : /login, /register, /css/**, /.well-known/**
      * - Toutes les autres pages nécessitent une authentification
      * - Formulaire de login personnalisé avec redirection vers /transfer
      * - Déconnexion avec redirection vers /login
@@ -51,11 +51,11 @@ public class SecurityConfig {
         http
                 .userDetailsService(customUserDetailsService)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login", "/register", "/css/**").permitAll()
+                        .requestMatchers("/login", "/register", "/css/**", "/.well-known/**").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/transfer")
+                        .defaultSuccessUrl("/transfer",true)
                         .permitAll())
                 .logout(logout -> logout
                         .logoutSuccessUrl("/login")
