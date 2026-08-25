@@ -33,11 +33,12 @@ CREATE TABLE transaction (
 );
 
 -- Données de test : utilisateurs
+-- mot de passe : "password123" hashé en BCrypt
 INSERT INTO user (username, email, password, balance) VALUES
-('Saber', 'saber@mail.com', 'password123', 100.00),
-('Laure-Anne', 'laure@mail.com', 'password123', 50.00),
-('Clara', 'clara@mail.com', 'password123', 75.00),
-('Luc', 'luc@mail.com', 'password123', 30.00);
+ ('Saber', 'saber@mail.com', '$2a$10$XLPqzTUHFf01MuaQbGr9hecjTcSE0KvsUUzAiMkqzjv1NP14luvaS', 100.00),
+ ('Laure-Anne', 'laure@mail.com', '$2a$10$XLPqzTUHFf01MuaQbGr9hecjTcSE0KvsUUzAiMkqzjv1NP14luvaS', 50.00),
+ ('Clara', 'clara@mail.com', '$2a$10$XLPqzTUHFf01MuaQbGr9hecjTcSE0KvsUUzAiMkqzjv1NP14luvaS', 75.00),
+ ('Luc', 'luc@mail.com', '$2a$10$XLPqzTUHFf01MuaQbGr9hecjTcSE0KvsUUzAiMkqzjv1NP14luvaS', 30.00);
 
 -- Données de test : relations
 INSERT INTO connection (user_id, connection_id) VALUES
